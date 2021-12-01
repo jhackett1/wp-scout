@@ -1,7 +1,7 @@
 <?php
 
 /** search for services that match a query */
-function wps_fetch_services(string $keywords, string $location, int $page)
+function wps_fetch_services(string $keywords, string $location, string $page)
 {
     $endpoint = get_option('wps_scout_options')["outpost_endpoint"];
 
@@ -10,6 +10,8 @@ function wps_fetch_services(string $keywords, string $location, int $page)
         "location" => $location,
         "page" => $page
     ));
+
+    print_r("/services?{$query}");
 
     $res = wp_remote_get("{$endpoint}/services?{$query}");
     if (is_wp_error($res)) {

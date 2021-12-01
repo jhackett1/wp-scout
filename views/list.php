@@ -1,8 +1,8 @@
 <?php
 
-$search = get_query_var("search");
-$location = get_query_var("location");
-$page = get_query_var("page");
+$search = $_GET["search"] ?? "";
+$location = $_GET["location"] ?? "";
+$page = $_GET["page"] ?? "";
 
 $res = wps_fetch_services($search, $location, $page);
 
@@ -14,8 +14,6 @@ $totalResults = $res->totalElements;
 get_header();
 
 ?>
-
-<?php echo $location ?>
 
 <form method="get">
     <label for="search">Search</label>
@@ -42,7 +40,5 @@ get_header();
 </ul>
 
 <p>Showing <?php echo (intval($page) * $perPage) + 1  ?> to <?php echo (intval($page) + 1) * count($results)  ?> of <?php echo $totalResults ?> services.</p>
-
-
 
 <?php get_footer(); ?>
