@@ -1,5 +1,6 @@
 <?php
 
+/** handle extra routes for service list, detail and pinboard pages */
 add_action('init',  function () {
     add_rewrite_rule(
         'services/?$',
@@ -18,28 +19,29 @@ add_action('init',  function () {
     );
 });
 
+/** add extra query vars to support service directory pages and search */
 add_filter('query_vars', function ($query_vars) {
+    // routing
     $query_vars[] = 'wps_service_list';
     $query_vars[] = 'wps_service_pinboard';
     $query_vars[] = 'wps_service_id';
+    // search
+    $query_vars[] = 'location';
     return $query_vars;
 });
 
-
+/** load the correct templates when the right query variables are present */
 add_action('parse_request', function (&$wp) {
-
-    print_r($wp->query_vars);
-
     if (array_key_exists('wps_service_list', $wp->query_vars)) {
-        include "views/list.php";
+        require plugin_dir_path(__DIR__) . "views/list.php";
         exit();
     }
     if (array_key_exists('wps_service_pinboard', $wp->query_vars)) {
-        include "views/pinboard.php";
+        require plugin_dir_path(__DIR__) . "views/pinboard.php";
         exit();
     }
     if (array_key_exists('wps_service_id', $wp->query_vars)) {
-        include "views/service.php";
+        require plugin_dir_path(__DIR__) . "views/service.php";
         exit();
     }
     return;

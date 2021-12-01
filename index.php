@@ -11,4 +11,5 @@ Text Domain: wp-scout
 */
 
 require "inc/settings.php";
+require "inc/api.php";
 require "inc/routes.php";
