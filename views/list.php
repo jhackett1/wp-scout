@@ -15,27 +15,29 @@ get_header();
 
 ?>
 
-<form method="get">
-    <label for="search">Search</label>
-    <input name="search" type="search" value="<?php echo $search ?>">
-
-    <label for="location">Near</label>
-    <input name="location" type="text" placeholder="eg. PO19 1RQ" value="<?php echo $location ?>" />
-
+<form class="wps-search-form" method="get">
+    <div>
+        <label for="search">Search</label>
+        <input name="search" type="search" value="<?php echo $search ?>">
+    </div>
+    <div>
+        <label for="location">Near</label>
+        <input name="location" type="text" placeholder="eg. PO19 1RQ" value="<?php echo $location ?>" />
+    </div>
     <button>Search</button>
 </form>
 
-<ul>
+<ul class="wps-results">
     <?php foreach ($results as $result) : ?>
-
-        <li>
+        <li class="wps-results__item">
             <small><?php echo $result->organisation->name ?></small>
             <a href="<?php echo get_site_url() . "/services/{$result->id}" ?>">
                 <h2><?php echo $result->name ?></h2>
             </a>
             <p><?php echo wp_trim_words($result->description, 20) ?></p>
-        </li>
 
+            <p><?php echo round($result->distance_away) ?> miles away</p>
+        </li>
     <?php endforeach; ?>
 </ul>
 

@@ -11,8 +11,6 @@ function wps_fetch_services(string $keywords, string $location, string $page)
         "page" => $page
     ));
 
-    print_r("/services?{$query}");
-
     $res = wp_remote_get("{$endpoint}/services?{$query}");
     if (is_wp_error($res)) {
         return false;
@@ -22,7 +20,7 @@ function wps_fetch_services(string $keywords, string $location, string $page)
 }
 
 /** get a particular service by unique id */
-function wps_fetch_service_by_id(int $id)
+function wps_fetch_service_by_id(string $id)
 {
     $endpoint = get_option('wps_scout_options')["outpost_endpoint"];
     $res = wp_remote_get("{$endpoint}/services/{$id}");

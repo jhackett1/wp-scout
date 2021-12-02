@@ -32,6 +32,7 @@ function wps_register_settings()
     add_settings_field('wps_scout_setting_outpost_endpoint', 'Outpost API endpoint', function () {
         $options = get_option('wps_scout_options');
         echo "<input id='wps_scout_setting_outpost_endpoint' name='wps_scout_options[outpost_endpoint]' type='text' value='" . esc_attr($options['outpost_endpoint'] ?? "") . "' />";
+        echo "<p class='description'>Don't include /services or a trailing slash. For example, https://example.com/api/v1</p>";
     }, 'wps_scout', 'api_settings');
 
     add_settings_field('wps_scout_setting_google_server_key', 'Google server key', function () {
