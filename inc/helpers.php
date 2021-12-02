@@ -51,8 +51,22 @@ function wps_pagination(int $currentPage, int $totalPages): void
 
 
 /** render a category checkbox with label */
-function wps_category_checkbox(string $label, string $value, array $current_categories)
+function wps_category_checkbox(string $label, string $value, array $current_categories, int $term_id, array $category_options)
 {
+    echo '<li>';
     echo '<input type="checkbox" name="cat[]" value="' . $value . '" id="cat-' . $value . '"' . (in_array($value, $current_categories) ? "checked" : "") . '/>';
     echo '<label for="cat-' . $value . '">' . $label . '</label>';
+    echo '</li>';
+
+    $children = array_filter($category_options, function ($term) use ($term_id) {
+        return $term->parent == $term_id;
+    });
+
+    if (count($children)) {
+        echo '<ul>';
+        foreach ($children as $child) {
+            wps_category_checkbox($child->name, $child->slug, $current_categories, $child->term_id, $category_options);
+        }
+        echo '</ul>';
+    }
 }

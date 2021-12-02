@@ -3,10 +3,16 @@
 $perPage = get_option('wps_scout_options')["per_page"];
 $category_options = get_terms(array('taxonomy' => "service_categories", 'hide_empty' => false));
 
+$top_level_category_options = array_filter($category_options, function ($term) {
+    return $term->parent == 0;
+});
+
 $search = $wp->query_vars["search"] ?? "";
 $location = $wp->query_vars["location"] ?? "";
 $categories = $wp->query_vars["cat"] ?? [];
 $page = $wp->query_vars["page"] ?? 1;
+
+var_dump($category_options);
 
 $res = wps_fetch_services($search, $location, $categories, $page, $perPage);
 
@@ -21,11 +27,11 @@ get_header();
 <form class="wps-search-form" method="get">
     <div>
         <label for="search">Search</label>
-        <input name="search" type="search" value="<?php echo $search ?>">
+        <input name="search" id="search" type="search" value="<?php echo $search ?>">
     </div>
     <div>
         <label for="location">Near</label>
-        <input name="location" type="text" placeholder="eg. PO19 1RQ" value="<?php echo $location ?>" />
+        <input name="location" id="location" type="text" placeholder="eg. PO19 1RQ" value="<?php echo $location ?>" />
     </div>
     <button>Search</button>
 </form>
@@ -35,8 +41,8 @@ get_header();
         <fieldset>
             <legend>Categories</legend>
 
-            <?php foreach ($category_options as $filter) : ?>
-                <?php wps_category_checkbox($filter->name, $filter->slug, $categories); ?>
+            <?php foreach ($top_level_category_options as $filter) : ?>
+                <?php wps_category_checkbox($filter->name, $filter->slug, $categories, $filter->term_id, $category_options); ?>
             <?php endforeach; ?>
 
         </fieldset>
