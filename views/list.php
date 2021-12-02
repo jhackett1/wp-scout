@@ -1,6 +1,7 @@
 <?php
 
 $perPage = get_option('wps_scout_options')["per_page"];
+$category_options = get_terms(array('taxonomy' => "service_categories", 'hide_empty' => false));
 
 $search = $wp->query_vars["search"] ?? "";
 $location = $wp->query_vars["location"] ?? "";
@@ -34,8 +35,9 @@ get_header();
         <fieldset>
             <legend>Categories</legend>
 
-            <?php wps_category_checkbox("Things to do", "things-to-do", $categories); ?>
-            <?php wps_category_checkbox("Advice and support", "advice-and-support", $categories); ?>
+            <?php foreach ($category_options as $filter) : ?>
+                <?php wps_category_checkbox($filter->name, $filter->slug, $categories); ?>
+            <?php endforeach; ?>
 
         </fieldset>
 

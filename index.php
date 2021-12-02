@@ -11,6 +11,7 @@ Text Domain: wp-scout
 */
 
 require "inc/settings.php";
+include "inc/taxonomies.php";
 require "inc/api.php";
 include "inc/formatters.php";
 include "inc/helpers.php";
