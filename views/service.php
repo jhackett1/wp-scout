@@ -1,6 +1,6 @@
 <?php
 
-$id = $_GET["service_id"];
+$id = $wp->query_vars["wps_service_id"];
 if (!$id) wp_redirect("/404");
 
 $service = wps_fetch_service_by_id($id);

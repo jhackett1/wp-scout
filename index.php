@@ -12,4 +12,7 @@ Text Domain: wp-scout
 
 require "inc/settings.php";
 require "inc/api.php";
+include "inc/helpers.php";
+
+// must load last
 require "inc/routes.php";
