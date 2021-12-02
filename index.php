@@ -12,6 +12,7 @@ Text Domain: wp-scout
 
 require "inc/settings.php";
 require "inc/api.php";
+include "inc/formatters.php";
 include "inc/helpers.php";
 
 // must load last

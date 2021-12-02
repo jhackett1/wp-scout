@@ -1,7 +1,7 @@
 <?php
 
 /** handle extra routes for service list, detail and pinboard pages */
-add_action('init',  function () {
+add_action('init',  function (): void {
     add_rewrite_rule(
         'services/?$',
         'index.php?wps_service_list=1',

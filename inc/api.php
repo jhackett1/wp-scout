@@ -1,14 +1,16 @@
 <?php
 
 /** search for services that match a query */
-function wps_fetch_services(string $keywords, string $location, string $page)
+function wps_fetch_services(string $keywords, string $location, array $categories, string $page, string $per_page)
 {
     $endpoint = get_option('wps_scout_options')["outpost_endpoint"];
 
     $query = http_build_query(array(
         "keywords" => $keywords,
         "location" => $location,
-        "page" => $page
+        "taxonomies" => join(",", $categories),
+        "page" => $page,
+        "per_page" => $per_page
     ));
 
     $res = wp_remote_get("{$endpoint}/services?{$query}");
